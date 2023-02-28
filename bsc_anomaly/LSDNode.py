@@ -9,6 +9,7 @@ from sensor_msgs.msg import LaserScan
 from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Twist
 from ackermann_msgs.msg import AckermannDriveStamped, AckermannDrive
+import time
 
 
 class LSDNode(Node):
@@ -41,10 +42,9 @@ class LSDNode(Node):
         vel.linear.x = speed
         self.drive.publish(vel)
 
-    def drive_ack_pub(self, acc):
+    def drive_ack_pub(self, speed):
         vel = AckermannDriveStamped()
-        vel.drive.acceleration = acc
-        vel.drive.speed = -5.0
+        vel.drive.speed = speed
         self.drive_ack.publish(vel)
 
         
@@ -55,9 +55,7 @@ def main(args=None):
     rclpy.init(args=args)
     LSDN = LSDNode()
     
-
-    #safety_node.drive_pub(5.0)
-    LSDN.drive_ack_pub(0.0)
+    LSDN.drive_ack_pub(5.0)
 
     rclpy.spin(LSDN)
 

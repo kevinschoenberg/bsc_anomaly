@@ -46,15 +46,18 @@ class LSDNode(Node):
         vel = AckermannDriveStamped()
         vel.drive.speed = speed
         self.drive_ack.publish(vel)
+    
+    def __del__(self):
+        # body of destructor
+        vel = Twist()
+        vel.linear.x = 0.
+        self.drive.publish(vel)
 
-        
-        
 
 
 def main(args=None):
     rclpy.init(args=args)
     LSDN = LSDNode()
-    
     LSDN.drive_ack_pub(5.0)
 
     rclpy.spin(LSDN)

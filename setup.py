@@ -21,7 +21,8 @@ setup(
     entry_points={
         'console_scripts': [
         	'LSDNode = bsc_anomaly.LSDNode:main',
-        	'LoggerNode = bsc_anomaly.LoggerNode:main'
+        	'LoggerNode = bsc_anomaly.LoggerNode:main',
+            'KeyNode = bsc_anomaly.KeyNode:main'
         ],
     },
 )

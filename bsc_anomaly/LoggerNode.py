@@ -28,7 +28,7 @@ class LoggerNode(Node):
         #file = open(strftime(home+'/sim_ws/our_test_logs/wp-%Y-%m-%d-%H-%M-%S',gmtime())+'.csv', 'w')
         print(home)
         self.file = open(home+'/sim_ws/experimentlog.csv', 'w')
-        header = ['name', 'area', 'country_code2', 'country_code3']
+        header = ['x', 'y', 'yaw', 'speed', 'time']
         self.writer = csv.writer(self.file)
         self.writer.writerow(header)
         self.odom = self.create_subscription(
@@ -67,10 +67,10 @@ class LoggerNode(Node):
         if data.twist.twist.linear.x>0.:
             print (data.twist.twist.linear.x)
         #print("",data.pose.pose.position.x)
-        self.writer.writerow('%f, %f, %f, %f\n' % (data.pose.pose.position.x,
+        self.file.write('%f, %f, %f, %f, %f\n' % (data.pose.pose.position.x,
                                         data.pose.pose.position.y,
                                         euler[2],
-                                        speed))
+                                        speed, time.time()))
 
         
 

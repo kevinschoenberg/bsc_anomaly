@@ -54,7 +54,7 @@ class LoggerNode(Node):
             print("v")
             self.doLog = False
             #open file
-            self.file = open(self.home+'/sim_ws/src/bsc_anomaly/test_results/longitude-'+ str(gmtime()[1:6]) +'.csv', 'w')
+            self.file = open(self.home +'/sim_ws/src/bsc_anomaly/test_results/longitude-'+ str(gmtime()[1:6]) +'.csv', 'w')
             header = ['x', 'y', 'yaw', 'speed', 'time']
             self.writer = csv.writer(self.file)
             self.writer.writerow(header)
@@ -71,6 +71,7 @@ class LoggerNode(Node):
         if self.doLog:
             if self.simStart + 10 < time.time():
                 self.doLog = False
+                print(data.pose.pose.position.x)
                 self.file.close()
                 return
             
@@ -83,14 +84,12 @@ class LoggerNode(Node):
             speed = LA.norm(np.array([data.twist.twist.linear.x, 
                                     data.twist.twist.linear.y, 
                                     data.twist.twist.linear.z]),2)
-            if data.twist.twist.linear.x>0.:
-                print (data.twist.twist.linear.x)
-            #print("",data.pose.pose.position.x)
+            #if data.twist.twist.linear.x>0.:
+                #print (data.twist.twist.linear.x)
             self.file.write('%f, %f, %f, %f, %f\n' % (data.pose.pose.position.x,
                                             data.pose.pose.position.y,
                                             euler[2],
                                             speed, time.time()))
-            print("logging2")
     
 
 

@@ -47,7 +47,7 @@ class LSDNode(Node):
             #
             time.sleep(1.)
             # speed 5
-            self.drive_ack_pub(5.0)
+            self.drive_ack_pub(1.0)
 
 
     def odom_callback(self, msg):
@@ -57,6 +57,9 @@ class LSDNode(Node):
     def drive_ack_pub(self, speed):
         vel = AckermannDriveStamped()
         vel.drive.speed = speed
+        #vel.drive.acceleration = 7.
+        #vel.jerk = 1.
+        print("publishing:", vel.drive.speed, vel.drive.acceleration, vel.drive.jerk)
         self.drive_ack.publish(vel)
 
     def set_initial_pose(self):
